@@ -74,7 +74,6 @@ export default {
         //点击第几页
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
-            /*console.log(this.currentPage) */
         }
     },
       mounted(){
