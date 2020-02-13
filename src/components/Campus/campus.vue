@@ -4,13 +4,13 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        综合新闻
+                        缤纷校园
                     </div>
                 </el-col>
             </el-row>
         </div>
 
-        <div class="news-list" v-for="item in newsList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+        <div class="news-list" v-for="item in campusList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
             <el-row type="flex" justify="center">
                 <el-col :span="18" class="news-hover">
                    <div class="news-item">
@@ -37,7 +37,6 @@
                 </el-col>
             </el-row>
         </div>
-        
         <div class="page">
             <el-row type="flex" justify="center">
                 <el-col :span="2">
@@ -46,7 +45,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="newsList.length"
+                        :total="campusList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -56,7 +55,7 @@
 </template>
 <script>
 export default {
-    props:['newsList'],
+    props:['campusList'],
     data(){
         return{
             // 每页显示的条数
@@ -70,10 +69,7 @@ export default {
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
         }
-    },
-    mounted(){
-        console.log(this.newsList)
-    }
+    }
 }
 </script>
 <style lang="">

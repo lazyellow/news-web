@@ -4,40 +4,33 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        综合新闻
+                        公告通知
                     </div>
                 </el-col>
             </el-row>
         </div>
 
-        <div class="news-list" v-for="item in newsList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
-            <el-row type="flex" justify="center">
-                <el-col :span="18" class="news-hover">
-                   <div class="news-item">
-                        <div>
-                            <el-image class="news-item-img" fit="cover" :src="item.imgUrl"></el-image>
+        <div class="notice-list">
+            <el-row type="flex" justify="center" v-for="item in noticeList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+                <el-col :span="16" class="notice-hover">
+                    <div class="notice-item">
+                        <div class="notice-date">
+                            <div class="date-day">{{item.day}}</div>
+                            <div class="date-year">{{item.year}}</div>
                         </div>
-                        <div class="news-item-text">
-                            <div class="news-item-title">
+                        <div class="notice-text">
+                            <div class="notice-title">
                                 {{item.title}}
                             </div>
-                            <div class="news-item-content">
+                            <div class="notice-content">
                                 {{item.content}}
                             </div>
-                        </div>
-                        <div class="news-item-detail">
-                            <span class="time">{{item.time}}</span>
                         </div>
                     </div>
                 </el-col>
             </el-row>
-            <el-row type="flex" justify="center">
-                <el-col :span="18">
-                    <el-divider></el-divider>
-                </el-col>
-            </el-row>
         </div>
-        
+
         <div class="page">
             <el-row type="flex" justify="center">
                 <el-col :span="2">
@@ -46,7 +39,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="newsList.length"
+                        :total="noticeList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -56,7 +49,7 @@
 </template>
 <script>
 export default {
-    props:['newsList'],
+    props:['noticeList'],
     data(){
         return{
             // 每页显示的条数
@@ -72,11 +65,11 @@ export default {
         }
     },
     mounted(){
-        console.log(this.newsList)
-    }
+        console.log(this.noticeList);
+    }
 }
 </script>
-<style lang="">
+<style>
     .title{
         width: 100%;
         margin: 50px 0px;
@@ -89,40 +82,52 @@ export default {
         text-align: center;
         color:#409eff;
     }
-    .news-item{
+    .notice-item{
+        height: 120px;
         position: relative;
+        margin: 20px 0px;
+        border: #dcdfe6 0.5px solid;
     }
-    .news-hover:hover{
+    .notice-item:hover{
         background: #409eff0a;
+        border:#409eff0a 0.5px solid;
     }
-    .news-item-img{
-        width: 400px;
-        height: 250px;
-    }
-    .news-item-text{
-        position: absolute;
-        top: 0px;
-        left: 450px;
-    }
-    .news-item-title{
-        margin-bottom: 20px;
-        font-size: 25px;
-        overflow: hidden;
-    }
-    .news-item-content{
-        width: 100%;
+    .notice-date{
+        width: 80px;
         height: 80px;
-        font-size: 20px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: #409eff;
+    }
+    .notice-date .date-day{
+        margin-top: 6px;
+        color: white;
+        font-size: 30px;
+        text-align: center;
+    }
+    .notice-date .date-year{
+        color: white;
+        font-size: 15px;
+        text-align: center;
+    }
+    .notice-text{
+        position: absolute;
+        height: 80px;
+        left: 150px;
+        top: 20px;
+        right: 10px;
+    }
+    .notice-title{
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+    .notice-content{
         /* 文字溢出处理 */
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;/*显示几行*/
+        -webkit-line-clamp: 2;/*显示几行*/
         overflow: hidden;
-    }
-    .news-item-detail{
-        position: absolute;
-        left: 450px;
-        bottom: 50px;
     }
     .page{
         margin: 30px 0;

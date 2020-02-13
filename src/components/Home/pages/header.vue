@@ -1,30 +1,20 @@
 <template>
-  <div class="demo-image__placeholder">
-    <div class="block">
-      <el-image :src="src"></el-image>
-    </div>
+  <div class="header">
+    <el-image class="himg" fit="cover" :src="src" style="width:100%;height:200px;"></el-image>
   </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'
+        src: 'https://www.sise.edu.cn/Public/images/sisejie.png'
       }
     }
   }
 </script>
 <style lang="">
-.demo-image__placeholder{
+  .header{
     width: 100%;
-    height: 10rem;
-}
-.demo-image__placeholder .block{
-    width: 100%;
-    height: 100%;
-}
-.demo-image__placeholder .block img{
-    width: 100%;
-    height: 10rem;
-}
+    height: 200px;
+  }
 </style>

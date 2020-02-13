@@ -1,8 +1,8 @@
 <template>
     <div class="swiper">
-        <el-carousel height="30rem">
+        <el-carousel width="100%" height="300px;">
             <el-carousel-item v-for="item in swiperList" :key="item.id">
-                <img :src="item.imgUrl" alt="">
+                <el-image fit="fill" :src="item.imgUrl"></el-image>
             </el-carousel-item>
         </el-carousel>
     </div>

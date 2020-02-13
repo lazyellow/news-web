@@ -4,18 +4,18 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        综合新闻
+                        学术竞赛
                     </div>
                 </el-col>
             </el-row>
         </div>
 
-        <div class="news-list" v-for="item in newsList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+        <div class="news-list" v-for="item in competitionList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
             <el-row type="flex" justify="center">
                 <el-col :span="18" class="news-hover">
                    <div class="news-item">
-                        <div>
-                            <el-image class="news-item-img" fit="cover" :src="item.imgUrl"></el-image>
+                        <div class="news-item-img">
+                            <el-image fit="cover" :src="item.imgUrl"></el-image>
                         </div>
                         <div class="news-item-text">
                             <div class="news-item-title">
@@ -37,7 +37,6 @@
                 </el-col>
             </el-row>
         </div>
-        
         <div class="page">
             <el-row type="flex" justify="center">
                 <el-col :span="2">
@@ -46,7 +45,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="newsList.length"
+                        :total="competitionList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -56,7 +55,7 @@
 </template>
 <script>
 export default {
-    props:['newsList'],
+    props:['competitionList'],
     data(){
         return{
             // 每页显示的条数
@@ -71,9 +70,9 @@ export default {
             this.currentPage = currentPage;
         }
     },
-    mounted(){
-        console.log(this.newsList)
-    }
+      mounted(){
+    console.log(this.competitionList)
+  }
 }
 </script>
 <style lang="">
@@ -95,7 +94,7 @@ export default {
     .news-hover:hover{
         background: #409eff0a;
     }
-    .news-item-img{
+    .news-item-img .el-image{
         width: 400px;
         height: 250px;
     }

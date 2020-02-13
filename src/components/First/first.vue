@@ -1,35 +1,36 @@
 <template>
     <div>
-        <div class="swiper">
-            <el-carousel height="30rem">
+        <div class="f-swiper">
+            <el-carousel height="400px">
                 <el-carousel-item v-for="item in swiperList" :key="item.id">
                     <img :src="item.imgUrl" alt="">
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <div class="hot">
+
+        <div class="f-hot">
             <el-row type="flex" justify="center">
                 <el-col :span="15">
                     <el-card class="box-card" shadow="hover">
-                    <div slot="header" class="clearfix hot-title">
+                    <div slot="header" class="clearfix f-hot-title">
                         <span>热点新闻</span>
                         <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
                     </div>
-                    <div v-for="o in 4" :key="o" class="text item">
-                        <div class="hot-item">
-                            <div class="hot-item-img">
-                                <el-image fit="cover" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt=""></el-image>
+                    <div v-for="item in hotList.slice(0,4)" :key="item.id" class="text item">
+                        <div class="f-hot-item">
+                            <div class="f-hot-item-img">
+                                <el-image fit="cover" :src="item.imgUrl"></el-image>
                             </div>
-                            <div class="hot-item-text">
-                                <div class="hot-item-title">
+                            <div class="f-hot-item-text">
+                                <div class="f-hot-item-title">
                                     <el-tag effect="plain">
-                                        新闻类型1
+                                        {{item.category}}
                                     </el-tag>
-                                    <span>这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题</span>
+                                    <span>{{item.title}}</span>
                                 </div>
                             </div>
-                            <div class="hot-item-detail">
-                                <span class="time">发布时间：2020/2/2</span>
+                            <div class="f-hot-item-detail">
+                                <span class="time">发布时间：{{item.time}}</span>
                             </div>
                         </div>
                         <el-divider></el-divider>
@@ -39,12 +40,12 @@
                 <el-col :span="1"></el-col>
                 <el-col :span="5">
                     <el-card class="box-card" shadow="hover">
-                    <div slot="header" class="clearfix hot-title">
+                    <div slot="header" class="clearfix f-hot-title">
                         <span>公告通知</span>
                         <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
                     </div>
-                    <div v-for="o in 5" :key="o" class="text item">
-                        【2020-02-02】关于做好 2020 年接收优秀应届本科毕业生免试攻读研究生工作的通知
+                    <div v-for="item in noticeList.slice(0,8)" :key="item.id" class="text-item">
+                        【{{item.year}}-{{item.day}}】{{item.title}}
                         <el-divider></el-divider>
                     </div>
                     </el-card>
@@ -52,29 +53,26 @@
             </el-row>
         </div>
 
-        <div class="news">
+        <div class="f-news">
             <el-row type="flex" justify="center">
             <el-col :span="10">
                <el-card class="box-card" shadow="hover">
-                <div slot="header" class="clearfix hot-title">
+                <div slot="header" class="clearfix f-news-title">
                     <span>综合新闻</span>
                     <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
                 </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    <div class="news-item">
-                        <div class="news-item-img">
-                            <el-image fit="cover" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt=""></el-image>
+                <div v-for="item in newsList.slice(0,4)" :key="item.id" class="text item">
+                    <div class="f-news-item">
+                        <div class="f-news-item-img">
+                            <el-image fit="cover" :src="item.imgUrl"></el-image>
                         </div>
-                        <div class="news-item-text">
-                            <div class="news-item-title">
-                                <el-tag effect="plain">
-                                    新闻类型1
-                                </el-tag>
-                                <span>这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题</span>
+                        <div class="f-news-item-text">
+                            <div class="f-news-item-title">
+                                {{item.title}}
                             </div>
                         </div>
-                        <div class="news-item-detail">
-                            <span class="time">发布时间：2020/2/2</span>
+                        <div class="f-news-item-detail">
+                            <span class="time">发布时间：{{item.time}}</span>
                         </div>
                     </div>
                     <el-divider></el-divider>
@@ -84,25 +82,22 @@
             <el-col :span="1"></el-col>
             <el-col :span="10">
                <el-card class="box-card" shadow="hover">
-                <div slot="header" class="clearfix hot-title">
+                <div slot="header" class="clearfix f-news-title">
                     <span>学术研究</span>
                     <el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
                 </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    <div class="news-item">
-                        <div class="news-item-img">
-                            <el-image fit="cover" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt=""></el-image>
+                <div v-for="item in dynamicList.slice(0,4)" :key="item.id" class="text item">
+                    <div class="f-news-item">
+                        <div class="f-news-item-img">
+                            <el-image fit="cover" :src="item.imgUrl" alt=""></el-image>
                         </div>
-                        <div class="news-item-text">
-                            <div class="news-item-title">
-                                <el-tag effect="plain">
-                                    新闻类型1
-                                </el-tag>
-                                <span>这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题这是新闻标题</span>
+                        <div class="f-news-item-text">
+                            <div class="f-news-item-title">
+                                {{item.title}}
                             </div>
                         </div>
-                        <div class="news-item-detail">
-                            <span class="time">发布时间：2020/2/2</span>
+                        <div class="f-news-item-detail">
+                            <span class="time">发布时间：{{item.time}}</span>
                         </div>
                     </div>
                     <el-divider></el-divider>
@@ -115,18 +110,21 @@
 
         <div class="school">
             <el-row class="school-title" type="flex" justify="center">
-                <el-col :span="21" :justify="center">缤纷校园</el-col>
+                <el-col :span="21" justify="center">校园人物</el-col>
             </el-row>
+            
             <el-row type="flex" justify="center">
-                <el-col :span="3" v-for="o in 6" :key="o" class="card-item">
-                    <el-card :body-style="{ padding: '0px' }" shadow="hover">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                        <div style="padding: 14px;" class="card-item-text">
-                            <span>这是一条很长的新闻标题这是一条很长的新闻标题这是一条很长的新闻标题</span>
-                            <div class="bottom clearfix"></div>
-                            <el-button type="text" class="button">查看</el-button>
-                        </div>
-                    </el-card>
+                <el-col :span="24">
+                    <ul>
+                        <li v-for="item in peopleList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+                            <div class="school-item">
+                                <div class="item-image">
+                                    <el-image fit="cover" :src="item.imgUrl"></el-image>
+                                </div>
+                                <div class="item-title">{{item.title}}</div>
+                            </div>
+                        </li>
+                    </ul>
                 </el-col>
             </el-row>
         </div>
@@ -134,6 +132,7 @@
 </template>
 <script>
 export default {
+    props:['hotList','newsList','dynamicList','peopleList','noticeList'],
     data(){
         return{
             swiperList:[
@@ -149,12 +148,23 @@ export default {
                     id:"03",
                     imgUrl:"https://www.sise.edu.cn/Uploads/2019-12-30/5e09a503a7892.jpg"
                 }
-            ]
+            ],
+            // 每页显示的条数
+            pagesize:8,
+            // 默认初始页面
+            currentPage:1
         }
     }
 }
 </script>
 <style lang="">
+    .f-swiper{
+        background-color: gray;
+    }
+    .f-swiper img{
+        width: 100%;
+        display: block;
+    }
     .el-row{
         margin-top: 50px;
     }
@@ -162,45 +172,65 @@ export default {
         width: 150px;
         height: 150px;
     }
-    .hot{
+    .f-hot{
         width:100%;
         padding: 10px 0px 50px 0px;
         background:#fff;
     }
-    .hot-title{
+    .f-hot-title{
         font-size: 20px;
         color: #409eff;
     }
-    .hot-item{
+    .f-hot-item-title{
+        font-size: 18px;
+    }
+    .f-hot-item-title:hover{
+        color: #409effcc;
+    }
+    .f-hot-item{
         position: relative;
     }
-    .hot-item-img img{
+    .f-hot-item-img img{
         position: absolute;
         
     }
-    .hot-item-text{
+    .f-hot-item-text{
         position: absolute;
         top: 0;
         left: 200px;
     }
-    .hot-item-detail{
+    .f-hot-item-detail{
         position: absolute;
         left: 200px;
         bottom: 0;
     }
-    .news-item{
+
+    .text-item:hover{
+        color: #409effcc;
+    }
+    .f-news-title{
+        font-size: 20px;
+        color: #409eff;
+    }
+    .f-news-item{
         position: relative;
     }
-    .news-item-img img{
+    .f-news-item-img img{
         position: absolute;
         
     }
-    .news-item-text{
+    .f-news-item-title{
+        font-size: 18px;
+    }
+    .f-news-item-title:hover{
+        color: #409effcc;
+    }
+    .f-news-item-text{
         position: absolute;
         top: 0;
         left: 200px;
     }
-    .news-item-detail{
+    .f-news-item-detail{
         position: absolute;
         left: 200px;
         bottom: 0;
@@ -225,23 +255,37 @@ export default {
         display: block;
     }
 
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-    .clearfix:after {
-        clear: both
-    }
     .school-title{
         font-size: 20px;
         color: #409eff;
     }
-    .card-item{
-        margin-right:50px;
-        margin-bottom: 100px;
+
+    ul{
+        margin-left: 120px;
     }
-    .card-item-text{
-        margin-bottom: 30px;
+    li{
+        float: left;
+        display: list-item;
+        list-style: none outside none;
+        margin-right: 120px;
+    }
+    .school .el-image{
+        width: 320px;
+        height: 200px;
+    }
+    .school-item{
+        width: 320px;
+        height: 300px;
+        margin-bottom: 50px;
+        border-bottom: 0.05px solid #e4e4e4;
+    }
+    .school-item:hover{
+        color: #409effcc;
+    }
+    .item-image{
+        margin-bottom: 20px;
+    }
+    .item-title{
+        font-size:18px;
     }
 </style>
