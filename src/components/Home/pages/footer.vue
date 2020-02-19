@@ -21,7 +21,7 @@
         </el-row>
     </div>
 </template>
-<style lang="">
+<style scoped>
     .footerpage{
         padding: 5px 5px 10px 5px;
         background-color: #242424;

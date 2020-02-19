@@ -5,12 +5,7 @@
         </el-header>
         <el-main>
             <home-nav></home-nav>
-            <router-view 
-                :hotList='hotList' :newsList='newsList' :campusList='campusList' :peopleList='peopleList'
-                :achievementList='achievementList' 
-                :dynamicList='dynamicList' 
-                :competitionList='competitionList'
-                :noticeList='noticeList'>
+            <router-view>
             </router-view>
         </el-main>
         <el-footer>
@@ -28,41 +23,10 @@ export default {
         HomeHeader,
         HomeNav,
         HomeFooter
-    },
-    data(){
-        return{
-            hotList:[],
-            newsList:[],
-            noticeList:[],
-            campusList:[],
-            peopleList:[],
-            achievementList:[],
-            dynamicList:[],
-            competitionList:[]
-        }
-    },
-    methods:{
-        getHttp(){
-            this.$http.get("/api/newsList.json")
-            .then((res)=>{
-                console.log(res)
-                this.hotList = res.data.data[0].hotList;
-                this.newsList = res.data.data[1].newsList;
-                this.noticeList = res.data.data[2].noticeList;
-                this.campusList = res.data.data[3].campusList;
-                this.peopleList = res.data.data[4].peopleList;
-                this.achievementList = res.data.data[5].achievementList;
-                this.dynamicList = res.data.data[6].dynamicList;
-                this.competitionList = res.data.data[7].competitionList;
-            })
-        }
-    },
-    mounted(){
-        this.getHttp()
     }
 }
 </script>
-<style lang="">
+<style scoped>
     .el-container{
         width: 100%;
         padding:0;

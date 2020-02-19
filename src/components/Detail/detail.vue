@@ -2,28 +2,23 @@
     <div class="detail">
         <el-row type="flex" justify="center">
             <el-col :span="18">
-                <div class="newsCategory">综合新闻</div>
+                <div class="newsCategory">{{newsContent.Category.category_name}}</div>
             </el-col>
         </el-row>
         <el-row type="flex" justify="center">
             <el-col :span="18">
                 <div class="news-title">
-                    这里放新闻标题 
+                    {{newsContent.news_title}}
                 </div>
                 <div class="news-message">
-                    <span>新闻记者：xxx</span>
-                    <span>编辑人员：xxx</span>
-                    <span>审核人员：xxx</span>
-                    <span>发布时间：2020/02/13</span>
-                    <span>修改时间：2020/03/13</span>
-                    <span>阅读量：200</span>
+                    <span>新闻记者：{{newsContent.news_reporter}}</span>
+                    <span>编辑人员：{{newsContent.news_editor}}</span>
+                    <span>审核人员：{{newsContent.news_reviewer}}</span>
+                    <span>发布时间：{{newsContent.news_time}}</span>
+                    <span>修改时间：{{newsContent.news_update}}</span>
+                    <span>阅读量：{{newsContent.read_amount}}</span>
                 </div>
-                <div class="news-content">
-                    2019年12月28日，重庆大学经济与工商管理学院校友会暨重庆分会2020年工作交流会在重庆大学A区经管学院601会议室顺利召开，会议由经管学院校友会重庆分会承办，学院党委书记、经管学院校友会会长严太华、党委副书记张燕、国内合作与交流办公室主任邓碧会等28人参加会议，会议由经管学院校友会重庆分会秘书长阿木布打主持。
-                    2019年12月28日，重庆大学经济与工商管理学院校友会暨重庆分会2020年工作交流会在重庆大学A区经管学院601会议室顺利召开，会议由经管学院校友会重庆分会承办，学院党委书记、经管学院校友会会长严太华、党委副书记张燕、国内合作与交流办公室主任邓碧会等28人参加会议，会议由经管学院校友会重庆分会秘书长阿木布打主持。
-                    2019年12月28日，重庆大学经济与工商管理学院校友会暨重庆分会2020年工作交流会在重庆大学A区经管学院601会议室顺利召开，会议由经管学院校友会重庆分会承办，学院党委书记、经管学院校友会会长严太华、党委副书记张燕、国内合作与交流办公室主任邓碧会等28人参加会议，会议由经管学院校友会重庆分会秘书长阿木布打主持。
-                    2019年12月28日，重庆大学经济与工商管理学院校友会暨重庆分会2020年工作交流会在重庆大学A区经管学院601会议室顺利召开，会议由经管学院校友会重庆分会承办，学院党委书记、经管学院校友会会长严太华、党委副书记张燕、国内合作与交流办公室主任邓碧会等28人参加会议，会议由经管学院校友会重庆分会秘书长阿木布打主持。
-                    2019年12月28日，重庆大学经济与工商管理学院校友会暨重庆分会2020年工作交流会在重庆大学A区经管学院601会议室顺利召开，会议由经管学院校友会重庆分会承办，学院党委书记、经管学院校友会会长严太华、党委副书记张燕、国内合作与交流办公室主任邓碧会等28人参加会议，会议由经管学院校友会重庆分会秘书长阿木布打主持。
+                <div class="news-content" v-html="newsContent.news_content">
                 </div>
             </el-col>
         </el-row>
@@ -31,14 +26,30 @@
 </template>
 <script>
 export default {
-    props:["newsList"],
-    mounted(){
-        console.log("测试"+this.newsList)
-    }
+    data(){
+        return{
+            newsContent:[]
+        }
+    },
+    created:function(){
+        let news_id = this.$route.params.news_id;
+        let url = 'http://47.101.150.127:3030/news/getNewsDetail?nid='+news_id;
+        this.$http.get(url)
+        .then(res => {
+            if(res.data.code == 200){
+                this.newsContent = res.data.data;
+            }else if(res.data.code ==400){
+                this.newsContent = [];
+            }
+        }).catch(function(error){
+            console.log(error)
+        });
+    }
 }
 </script>
-<style>
+<style scoped>
     .detail{
+        margin-top: 50px;
         margin-bottom: 50px;
     }
     .newsCategory{
@@ -47,6 +58,7 @@ export default {
         line-height: 28px;
         border-left: 3px solid #409eff;
         padding-left: 10px;
+        margin-bottom: 100px;
     }
     .news-title{
         font-size: 25px;
@@ -63,9 +75,12 @@ export default {
         margin-left: 50px;
     }
     .news-content{
-        margin-top: 40px;
+        margin-bottom: 40px;
         font-size: 20px;
         line-height: 50px;
         text-indent:2em;
     }
+    /* .news-content img{
+        display:block;
+    } */
 </style>

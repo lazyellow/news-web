@@ -45,7 +45,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
     .school{
         margin-bottom: 100px;
     }

@@ -4,26 +4,27 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        公告通知
+                        {{NoticeList[0].Category.category_name}}
                     </div>
                 </el-col>
             </el-row>
         </div>
 
         <div class="notice-list">
-            <el-row type="flex" justify="center" v-for="item in noticeList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+            <el-row type="flex" justify="center"
+                v-for="item in NoticeList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.news_id">
                 <el-col :span="16" class="notice-hover">
-                    <div class="notice-item">
+                    <div class="notice-item" @click="getNewsDetail(item.news_id)">
                         <div class="notice-date">
-                            <div class="date-day">{{item.day}}</div>
-                            <div class="date-year">{{item.year}}</div>
+                            <div class="date-day">{{item.news_time.split('-')[2]}}</div>
+                            <div class="date-year">{{item.news_time.split('-')[0]}}-{{item.news_time.split('-')[1]}}</div>
                         </div>
                         <div class="notice-text">
                             <div class="notice-title">
-                                {{item.title}}
+                                {{item.news_title}}
                             </div>
                             <div class="notice-content">
-                                {{item.content}}
+                                {{item.news_subtitle}}
                             </div>
                         </div>
                     </div>
@@ -39,7 +40,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="noticeList.length"
+                        :total="NoticeList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -49,27 +50,43 @@
 </template>
 <script>
 export default {
-    props:['noticeList'],
     data(){
         return{
+            NoticeList:[],
             // 每页显示的条数
             pagesize:6,
             // 默认初始页面
             currentPage:1
         }
     },
+    created:function(){
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${1}`)
+        .then(res => {
+            if(res.data.code == 200){
+                this.NoticeList = res.data.data;
+            }else if(res.data.code == 400){
+                this.NoticeList = [];
+            }
+        }).catch(function(error){
+            console.log(error)
+        });
+    },
     methods:{
         //点击第几页
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
+        },
+        //跳转新闻详情页
+        getNewsDetail:function(nid){
+            console.log("测试点击notice")
+            this.$router.push({
+                name:'Detail',params: {news_id:nid}
+            })
         }
-    },
-    mounted(){
-        console.log(this.noticeList);
     }
 }
 </script>
-<style>
+<style scoped>
     .title{
         width: 100%;
         margin: 50px 0px;

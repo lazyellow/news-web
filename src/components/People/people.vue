@@ -4,7 +4,7 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        学院人物
+                        {{PeopleList[0].Category.category_name}}
                     </div>
                 </el-col>
             </el-row>
@@ -14,12 +14,14 @@
             <el-col :span="2"></el-col>
             <el-col :span="20">
                 <ul>
-                    <li v-for="item in peopleList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+                    <li @click="getNewsDetail(item.news_id)"
+                        v-for="item in PeopleList.slice((currentPage-1)*pagesize,currentPage*pagesize)" 
+                        :key="item.news_id">
                         <div class="people-item">
                             <div class="item-image">
-                                <el-image fit="cover" :src="item.imgUrl"></el-image>
+                                <el-image fit="cover" :src="item.news_source"></el-image>
                             </div>
-                            <div class="item-title">{{item.title}}</div>
+                            <div class="item-title">{{item.news_title}}</div>
                         </div>
                     </li>
                 </ul>
@@ -34,7 +36,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="peopleList.length"
+                        :total="PeopleList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -44,24 +46,42 @@
 </template>
 <script>
 export default {
-   props:['peopleList'],
    data(){
        return{
+           PeopleList:[],
            // 每页显示的条数
             pagesize:9,
             // 默认初始页面
             currentPage:1
        }
    },
+   created:function(){
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${6}`)
+        .then(res => {
+            if(res.data.code == 200){
+                this.PeopleList = res.data.data;
+            }else if(res.data.code == 400){
+                this.PeopleList = [];
+            }
+        }).catch(function(error){
+            console.log(error)
+        });
+    },
    methods:{
        //点击第几页
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
+        },
+        //跳转新闻详情页
+        getNewsDetail:function(nid){
+            this.$router.push({
+                name:'Detail',params: {news_id:nid}
+            })
         }
    }
 }
 </script>
-<style>
+<style scoped>
     .title{
         width: 100%;
         margin: 50px 0px;

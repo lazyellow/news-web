@@ -4,29 +4,32 @@
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        学术成果
+                        <!-- 学术成果 -->
+                        {{AchievementList[0].Category.category_name}}
                     </div>
                 </el-col>
             </el-row>
         </div>
 
-        <div class="news-list" v-for="item in achievementList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+        <div class="news-list" @click="getNewsDetail(item.news_id)"
+            v-for="item in AchievementList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.news_id">
             <el-row type="flex" justify="center">
                 <el-col :span="18" class="news-hover">
                    <div class="news-item">
                         <div class="news-item-img">
-                            <el-image fit="cover" :src="item.imgUrl"></el-image>
+                            <el-image fit="cover" :src="item.news_source"></el-image>
                         </div>
                         <div class="news-item-text">
                             <div class="news-item-title">
-                                {{item.title}}
+                                {{item.news_title}}
                             </div>
                             <div class="news-item-content">
-                                {{item.content}}
+                                {{item.news_subtitle}}
                             </div>
                         </div>
                         <div class="news-item-detail">
-                            <span class="time">{{item.time}}</span>
+                            <span class="time">发布时间：{{item.news_time}}</span>
+                            <span class="time">阅读量：{{item.read_amount}}</span>
                         </div>
                     </div>
                 </el-col>
@@ -45,7 +48,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="achievementList.length"
+                        :total="AchievementList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -55,27 +58,43 @@
 </template>
 <script>
 export default {
-    props:['achievementList'],
     data(){
         return{
+            AchievementList:[],
             // 每页显示的条数
             pagesize:6,
             // 默认初始页面
             currentPage:1
         }
     },
+    created:function(){
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${3}`)
+        .then(res => {
+            if(res.data.code == 200){
+                this.AchievementList = res.data.data;
+            }else if(res.data.code == 400){
+                this.AchievementList = [];
+            }
+            this.AchievementList = res.data.data;
+        }).catch(function(error){
+            console.log(error)
+        });
+    },
     methods:{
         //点击第几页
         handleCurrentChange: function(currentPage) {
             this.currentPage = currentPage;
+        },
+        //跳转新闻详情页
+        getNewsDetail:function(nid){
+            this.$router.push({
+                name:'Detail',params: {news_id:nid}
+            })
         }
-    },
-      mounted(){
-    console.log(this.newsList)
-  }
+    }
 }
 </script>
-<style lang="">
+<style scoped>
     .title{
         width: 100%;
         margin: 50px 0px;
