@@ -1,7 +1,7 @@
 <template>
   <div class='nav'>
     <el-row type="flex" justify="center">
-      <el-col :span='15'>
+      <el-col :span='16'>
         <el-menu
             :default-active="$route.path"
             class="el-menu-demo"
@@ -10,6 +10,7 @@
             >
             <el-menu-item index="/First">首页</el-menu-item>
             <el-menu-item index="/School">学院简介</el-menu-item>
+            <el-menu-item index="/Allnews">全部新闻</el-menu-item>
             <el-menu-item index="/News">{{CategoryList[0].category_name}}</el-menu-item>
             <el-menu-item index="/Notice">{{CategoryList[1].category_name}}</el-menu-item>
             <el-menu-item index="/Campus">{{CategoryList[2].category_name}}</el-menu-item>

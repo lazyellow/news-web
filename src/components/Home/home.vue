@@ -1,9 +1,11 @@
 <template>
-    <el-container>
+    <el-container class="content-area">
+        <el-backtop :right="100" :bottom="100" :visibility-height="200" style="background:#f5f7fa;">
+        </el-backtop>
         <el-header height="150px">
             <home-header></home-header>
         </el-header>
-        <el-main>
+        <el-main v-bind:style="{minHeight: Height+'px'}">
             <home-nav></home-nav>
             <router-view>
             </router-view>
@@ -19,10 +21,21 @@ import HomeNav from './pages/nav'
 import HomeFooter from './pages/footer'
 
 export default {
+    data(){
+        return{
+            Height: 0
+        }
+    },
     components:{
         HomeHeader,
         HomeNav,
         HomeFooter
+    },
+    mounted(){
+        //动态设置内容高度 让footer始终居底   header+footer的高度是100
+        this.Height = document.documentElement.clientHeight - 217;  
+    　　//监听浏览器窗口变化　
+        window.onresize = ()=> {this.Height = document.documentElement.clientHeight -217}
     }
 }
 </script>
@@ -44,4 +57,5 @@ export default {
         width: 100%;
         padding: 0;
     }
+
 </style>

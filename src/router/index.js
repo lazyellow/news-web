@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home/home'
 import First from '@/components/First/first'
 import School from '@/components/School/school'
+import Allnews from '@/components/Allnews/allnews'
 import News from '@/components/News/news'
 import Campus from '@/components/Campus/campus'
 import Notice from '@/components/Notice/notice'
@@ -34,6 +35,11 @@ export default new Router({
           path: 'School',
           name: 'School',
           component: School
+        },
+        {
+          path: 'Allnews',
+          name: 'Allnews',
+          component: Allnews
         },
         {
           path: 'News',

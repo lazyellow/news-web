@@ -14,12 +14,12 @@
                     <el-card class="box-card" shadow="hover">
                     <div slot="header" class="clearfix f-hot-title">
                         <span>热点新闻</span>
-                        <el-button style="float: right; padding: 3px 0" type="text"
+                        <!-- <el-button style="float: right; padding: 3px 0" type="text"
                             @click="getMore(HotList[0].Category.category_id)">
                             更多
-                        </el-button>
+                        </el-button> -->
                     </div>
-                    <div v-for="item in HotList.slice(0,4)" :key="item.news_id" class="text item">
+                    <div v-for="item in HotList.slice(0,8)" :key="item.news_id" class="text item">
                         <div class="f-hot-item" @click="getNewsDetail(item.news_id)">
                             <div class="f-hot-item-img">
                                 <el-image fit="cover" :src="item.news_source"></el-image>
@@ -74,7 +74,7 @@
                     </el-button>
                 </div>
                 <div class="text item" 
-                    v-for="item in NewsList.slice(0,4)" :key="item.news_id" 
+                    v-for="item in NewsList.slice(0,6)" :key="item.news_id" 
                     @click="getNewsDetail(item.news_id)">
                     <div class="f-news-item">
                         <div class="f-news-item-img">
@@ -104,7 +104,7 @@
                         更多
                     </el-button>
                 </div>
-                <div v-for="item in AcademicList.slice(0,4)" :key="item.news_id" class="text item"
+                <div v-for="item in AcademicList.slice(0,6)" :key="item.news_id" class="text item"
                      @click="getNewsDetail(item.news_id)">
                     <div class="f-news-item">
                         <div class="f-news-item-img">
@@ -326,16 +326,19 @@ export default {
     }
     .f-hot-item-img img{
         position: absolute;
-        
+    }
+    .f-hot-item-img .el-image{
+        width:80px;
+        height:80px;
     }
     .f-hot-item-text{
         position: absolute;
         top: 0;
-        left: 200px;
+        left: 110px;
     }
     .f-hot-item-detail{
         position: absolute;
-        left: 200px;
+        left: 110px;
         bottom: 0;
     }
     .f-news-title{
