@@ -38,6 +38,8 @@ export default {
         .then(res => {
             if(res.data.code == 200){
                 this.newsContent = res.data.data;
+                // 记录新闻阅读量，给阅读量+1
+                this.$http.get('http://47.101.150.127:3030/news/addNewCount?id='+news_id);
             }else if(res.data.code ==400){
                 this.newsContent = [];
             }

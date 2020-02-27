@@ -37,11 +37,6 @@ export default new Router({
           component: School
         },
         {
-          path: 'Allnews',
-          name: 'Allnews',
-          component: Allnews
-        },
-        {
           path: 'News',
           name: 'News',
           component: News
