@@ -14,12 +14,12 @@
                     <el-card class="box-card" shadow="hover">
                     <div slot="header" class="clearfix f-hot-title">
                         <span>热点新闻</span>
-                        <!-- <el-button style="float: right; padding: 3px 0" type="text"
-                            @click="getMore(HotList[0].Category.category_id)">
+                        <el-button style="float: right; padding: 3px 0" type="text"
+                            @click="getMore('hot')">
                             更多
-                        </el-button> -->
+                        </el-button>
                     </div>
-                    <div v-for="item in HotList.slice(0,8)" :key="item.news_id" class="text item">
+                    <div v-for="item in HotList.slice(0,5)" :key="item.news_id" class="text item">
                         <div class="f-hot-item" @click="getNewsDetail(item.news_id)">
                             <div class="f-hot-item-img">
                                 <el-image fit="cover" :src="item.news_source"></el-image>
@@ -74,7 +74,7 @@
                     </el-button>
                 </div>
                 <div class="text item" 
-                    v-for="item in NewsList.slice(0,6)" :key="item.news_id" 
+                    v-for="item in NewsList.slice(0,5)" :key="item.news_id" 
                     @click="getNewsDetail(item.news_id)">
                     <div class="f-news-item">
                         <div class="f-news-item-img">
@@ -98,13 +98,13 @@
             <el-col :span="10">
                <el-card class="box-card" shadow="hover">
                 <div slot="header" class="clearfix f-news-title">
-                    <span>学术研究</span>
+                    <span>学术动态</span>
                     <el-button style="float: right; padding: 3px 0" type="text"
                         @click="getMore(AcademicList[0].Category.category_id)">
                         更多
                     </el-button>
                 </div>
-                <div v-for="item in AcademicList.slice(0,6)" :key="item.news_id" class="text item"
+                <div v-for="item in AcademicList.slice(0,5)" :key="item.news_id" class="text item"
                      @click="getNewsDetail(item.news_id)">
                     <div class="f-news-item">
                         <div class="f-news-item-img">
@@ -224,8 +224,8 @@ export default {
             console.log(error)
         });
 
-        //学术新闻请求
-        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${4}`)
+        //学术动态请求
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${3}`)
         .then(res => {
             if(res.data.code == 200){
                 this.AcademicList = res.data.data;
@@ -237,7 +237,7 @@ export default {
         });
 
         //校园人物请求
-        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${6}`)
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${4}`)
         .then(res => {
             if(res.data.code == 200){
                 this.PeopleList = res.data.data;
@@ -266,19 +266,15 @@ export default {
                 })
             }else if(cid == 3){
                 this.$router.push({
-                    path:'/Achievement'
+                    path:'/Dynamic'
                 })
             }else if(cid == 4){
                 this.$router.push({
-                    path:'/Dynamic'
-                })
-            }else if(cid == 5){
-                this.$router.push({
-                    path:'/Competition'
-                })
-            }else if(cid == 6){
-                this.$router.push({
                     path:'/People'
+                })
+            }else if(cid == 'hot'){
+                this.$router.push({
+                    path:'/Hotnews'
                 })
             }
         },

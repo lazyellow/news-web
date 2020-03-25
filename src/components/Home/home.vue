@@ -2,7 +2,7 @@
     <el-container class="content-area">
         <el-backtop :right="100" :bottom="100" :visibility-height="200" style="background:#f5f7fa;">
         </el-backtop>
-        <el-header height="150px">
+        <el-header height="50px">
             <home-header></home-header>
         </el-header>
         <el-main v-bind:style="{minHeight: Height+'px'}">

@@ -1,32 +1,32 @@
 <template>
-    <div class="search">
+    <div class="news">
         <div class="title">
             <el-row type="flex" justify="center">
                 <el-col :span="18">
                     <div class="title-text">
-                        搜索结果
+                        热点新闻
                     </div>
                 </el-col>
             </el-row>
         </div>
 
-        <div class="search-list"    @click="getNewsDetail(item.news_id)"
-            v-for="item in searchList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.id">
+        <div class="news-list"   @click="getNewsDetail(item.news_id)"
+            v-for="item in AllnewsList.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="item.news_id">
             <el-row type="flex" justify="center">
-                <el-col :span="18" class="search-hover">
-                   <div class="search-item">
+                <el-col :span="18" class="news-hover">
+                   <div class="news-item">
                         <div>
-                            <el-image class="search-item-img" fit="cover" :src="item.news_source"></el-image>
+                            <el-image class="news-item-img" fit="cover" :src="item.news_source"></el-image>
                         </div>
-                        <div class="search-item-text">
-                            <div class="search-item-title">
+                        <div class="news-item-text">
+                            <div class="news-item-title">
                                 {{item.news_title}}
                             </div>
-                            <div class="search-item-content">
+                            <div class="news-item-content">
                                 {{item.news_subtitle}}
                             </div>
                         </div>
-                        <div class="search-item-detail">
+                        <div class="news-item-detail">
                             <span class="time">发布时间：{{item.news_time}}</span>
                             <span class="time">阅读量：{{item.read_amount}}</span>
                         </div>
@@ -48,7 +48,7 @@
                         :current-page="currentPage"
                         :page-size="pagesize"
                         layout="prev, pager, next, jumper"
-                        :total="searchList.length"
+                        :total="AllnewsList.length"
                         >
                     </el-pagination>
                 </el-col>
@@ -60,7 +60,7 @@
 export default {
     data(){
         return{
-            searchList:[],
+            AllnewsList:[],
             // 每页显示的条数
             pagesize:6,
             // 默认初始页面
@@ -68,18 +68,16 @@ export default {
         }
     },
     created:function(){
-        let cid = this.$route.params.cid;
-        let keyWord = this.$route.params.keyWord;
-        let url = 'http://47.101.150.127:3030/news/searchNews?id='+cid+'&value='+keyWord;
-        this.getData(url);
-    },
-    watch:{
-        '$route' (newUrl, oldUrl) {
-            this.cid = newUrl.params.cid;
-            this.keyWord = newUrl.params.keyWord;
-            this.url = 'http://47.101.150.127:3030/news/searchNews?id='+this.cid+'&value='+this.keyWord;
-            this.getData(this.url);
-        }
+        this.$http.get(`http://47.101.150.127:3030/news/getHotNews`)
+        .then(res => {
+            if(res.data.code == 200){
+                this.AllnewsList = res.data.data;
+            }else if(res.data.code == 400){
+                this.AllnewsList = [];
+            }
+        }).catch(function(error){
+            console.log(error)
+        });
     },
     methods:{
         //点击第几页
@@ -91,19 +89,6 @@ export default {
             this.$router.push({
                 name:'Detail',params: {news_id:nid}
             })
-        },
-        // 请求搜索结果列表接口
-        getData:function(url){
-            this.$http.get(url)
-                .then(res => {
-                    if(res.data.code == 200){
-                        this.searchList = res.data.data;
-                    }else if(res.data.code == 400){
-                        this.searchList = [];
-                    }
-                }).catch(function(error){
-                    console.log(error)
-                });
         }
     }
 }
@@ -121,27 +106,27 @@ export default {
         text-align: center;
         color:#409eff;
     }
-    .search-item{
+    .news-item{
         position: relative;
     }
-    .search-hover:hover{
+    .news-hover:hover{
         background: #409eff0a;
     }
-    .search-item-img{
+    .news-item-img{
         width: 400px;
         height: 250px;
     }
-    .search-item-text{
+    .news-item-text{
         position: absolute;
         top: 0px;
         left: 450px;
     }
-    .search-item-title{
+    .news-item-title{
         margin-bottom: 20px;
         font-size: 25px;
         overflow: hidden;
     }
-    .search-item-content{
+    .news-item-content{
         width: 100%;
         height: 80px;
         font-size: 20px;
@@ -151,7 +136,7 @@ export default {
         -webkit-line-clamp: 3;/*显示几行*/
         overflow: hidden;
     }
-    .search-item-detail{
+    .news-item-detail{
         position: absolute;
         left: 450px;
         bottom: 50px;

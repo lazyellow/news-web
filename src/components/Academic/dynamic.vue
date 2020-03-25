@@ -68,7 +68,7 @@ export default {
         }
     },
     created:function(){
-        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${4}`)
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${3}`)
         .then(res => {
             if(res.data.code == 200){
                 this.DynamicList = res.data.data;

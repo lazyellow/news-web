@@ -56,7 +56,7 @@ export default {
        }
    },
    created:function(){
-        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${6}`)
+        this.$http.get(`http://47.101.150.127:3030/news/getNewsByType?category_id=${4}`)
         .then(res => {
             if(res.data.code == 200){
                 this.PeopleList = res.data.data;

@@ -6,6 +6,7 @@ import Home from '@/components/Home/home'
 import First from '@/components/First/first'
 import School from '@/components/School/school'
 import Allnews from '@/components/Allnews/allnews'
+import Hotnews from '@/components/Hotnews/hotnews'
 import News from '@/components/News/news'
 import Campus from '@/components/Campus/campus'
 import Notice from '@/components/Notice/notice'
@@ -30,6 +31,14 @@ export default new Router({
           path: 'First',
           name: 'First',
           component: First
+        },{
+          path:'Allnews',
+          name: 'Allnews',
+          component: Allnews
+        },{
+          path:'Hotnews',
+          name: 'Hotnews',
+          component: Hotnews
         },
         {
           path: 'School',
@@ -51,21 +60,21 @@ export default new Router({
           name: 'Notice',
           component: Notice
         },
-        {
-          path: 'Achievement',
-          name: 'Achievement',
-          component: Achievement
-        },
+        // {
+        //   path: 'Achievement',
+        //   name: 'Achievement',
+        //   component: Achievement
+        // },
         {
           path: 'Dynamic',
           name: 'Dynamic',
           component: Dynamic
         },
-        {
-          path: 'Competition',
-          name: 'Competition',
-          component: Competition
-        },
+        // {
+        //   path: 'Competition',
+        //   name: 'Competition',
+        //   component: Competition
+        // },
         {
           path: 'People',
           name: 'People',
